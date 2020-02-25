@@ -9,5 +9,9 @@ COPY package*.json ./
 RUN npm ci
 # Bundle app source
 COPY . .
-#RUN ionic build
-CMD ["ionic", "serve", "--address", "0.0.0.0", "-p", "8100", "--no-open"]
+RUN ionic build
+
+## Run 
+FROM nginx:alpine
+#COPY www /usr/share/nginx/html
+COPY --from=ionic  /usr/src/app/www /usr/share/nginx/html
